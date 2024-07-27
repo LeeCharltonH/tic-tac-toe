@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { useCurrentPlayer } from '../../stores/gameStatusStore';
+import { useCurrentPlayer, useSetGameStatus } from '../../stores/gameStatusStore';
 
 interface CardProps {
   content: string;
   onClick: () => void;
+  cardNumber: number;
 }
 
-export const Card = ({ content, onClick }: CardProps) => {
+export const Card = ({ content, onClick, cardNumber }: CardProps) => {
   const [cardContent, setCardContent] = useState(content);
   const currentPlayer = useCurrentPlayer();
+  const setGameStatus = useSetGameStatus();
 
   const onClickHandler = () => {
+    setGameStatus(currentPlayer, cardNumber);
     setCardContent(currentPlayer);
     onClick();
   };

@@ -4,6 +4,8 @@ import { AvailablePlayers } from '../types';
 interface GameStatusStore {
   currentPlayer: AvailablePlayers;
   setNextPlayer: () => void;
+  gameStatus: string[] | null[];
+  setGameStatus: (currentPlayer: AvailablePlayers, cardNumber: number) => void;
 }
 
 const useGameStatusStore = create<GameStatusStore>((set) => ({
@@ -12,8 +14,19 @@ const useGameStatusStore = create<GameStatusStore>((set) => ({
     set((state) => {
       const nextPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
       return { currentPlayer: nextPlayer };
+    }),
+  gameStatus: Array(9).fill(null),
+  setGameStatus: (currentPlayer, cardNumber) =>
+    set((state) => {
+      const newGameStatus = state.gameStatus.slice();
+
+      newGameStatus[cardNumber] = currentPlayer;
+
+      return { gameStatus: newGameStatus };
     })
 }));
 
 export const useCurrentPlayer = () => useGameStatusStore((state) => state.currentPlayer);
 export const useSetNextPlayer = () => useGameStatusStore((state) => state.setNextPlayer);
+export const useGameStatus = () => useGameStatusStore((state) => state.gameStatus);
+export const useSetGameStatus = () => useGameStatusStore((state) => state.setGameStatus);
