@@ -4,8 +4,10 @@ import { AvailablePlayers } from '../types';
 interface GameStatusStore {
   currentPlayer: AvailablePlayers;
   setNextPlayer: () => void;
-  gameStatus: string[] | null[];
+  gameStatus: (string | null)[];
   setGameStatus: (currentPlayer: AvailablePlayers, cardNumber: number) => void;
+  winningPlayer: AvailablePlayers | null;
+  setWinningPlayer: (winner: AvailablePlayers | null) => void;
 }
 
 const useGameStatusStore = create<GameStatusStore>((set) => ({
@@ -23,10 +25,14 @@ const useGameStatusStore = create<GameStatusStore>((set) => ({
       newGameStatus[cardNumber] = currentPlayer;
 
       return { gameStatus: newGameStatus };
-    })
+    }),
+  winningPlayer: null,
+  setWinningPlayer: (winner) => set(() => ({ winningPlayer: winner }))
 }));
 
 export const useCurrentPlayer = () => useGameStatusStore((state) => state.currentPlayer);
 export const useSetNextPlayer = () => useGameStatusStore((state) => state.setNextPlayer);
 export const useGameStatus = () => useGameStatusStore((state) => state.gameStatus);
 export const useSetGameStatus = () => useGameStatusStore((state) => state.setGameStatus);
+export const useWinningPlayer = () => useGameStatusStore((state) => state.winningPlayer);
+export const useSetWinningPlayer = () => useGameStatusStore((state) => state.setWinningPlayer);
