@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { AvailablePlayers } from '../types';
+import { initialGameStatus, initialPlayer } from '../consts';
 
 interface GameStatusStore {
   currentPlayer: AvailablePlayers;
@@ -8,16 +9,17 @@ interface GameStatusStore {
   setGameStatus: (currentPlayer: AvailablePlayers, cardNumber: number) => void;
   winningPlayer: AvailablePlayers | null;
   setWinningPlayer: (winner: AvailablePlayers | null) => void;
+  resetGame: () => void;
 }
 
 const useGameStatusStore = create<GameStatusStore>((set) => ({
-  currentPlayer: 'X',
+  currentPlayer: initialPlayer,
   setNextPlayer: () =>
     set((state) => {
       const nextPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
       return { currentPlayer: nextPlayer };
     }),
-  gameStatus: Array(9).fill(null),
+  gameStatus: initialGameStatus,
   setGameStatus: (currentPlayer, cardNumber) =>
     set((state) => {
       const newGameStatus = state.gameStatus.slice();
@@ -27,7 +29,13 @@ const useGameStatusStore = create<GameStatusStore>((set) => ({
       return { gameStatus: newGameStatus };
     }),
   winningPlayer: null,
-  setWinningPlayer: (winner) => set(() => ({ winningPlayer: winner }))
+  setWinningPlayer: (winner) => set(() => ({ winningPlayer: winner })),
+  resetGame: () =>
+    set(() => ({
+      currentPlayer: initialPlayer,
+      gameStatus: initialGameStatus,
+      winningPlayer: null
+    }))
 }));
 
 export const useCurrentPlayer = () => useGameStatusStore((state) => state.currentPlayer);
@@ -36,3 +44,4 @@ export const useGameStatus = () => useGameStatusStore((state) => state.gameStatu
 export const useSetGameStatus = () => useGameStatusStore((state) => state.setGameStatus);
 export const useWinningPlayer = () => useGameStatusStore((state) => state.winningPlayer);
 export const useSetWinningPlayer = () => useGameStatusStore((state) => state.setWinningPlayer);
+export const useResetGame = () => useGameStatusStore((state) => state.resetGame);

@@ -13,3 +13,9 @@ export const winningCombinations = [
   [0, 4, 8],
   [2, 4, 6]
 ];
+
+export const initialPlayer = players.X;
+
+export const initialGameStatus = Array(9).fill(null);
+
+export const initialWinningPlayer = null;

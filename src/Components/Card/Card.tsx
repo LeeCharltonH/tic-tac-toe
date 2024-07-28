@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCurrentPlayer, useSetGameStatus, useWinningPlayer } from '../../stores/gameStatusStore';
 
 interface CardProps {
-  content: string;
+  content: string | null;
   onClick: () => void;
   cardNumber: number;
 }
@@ -18,6 +18,10 @@ export const Card = ({ content, onClick, cardNumber }: CardProps) => {
     setCardContent(currentPlayer);
     onClick();
   };
+
+  useEffect(() => {
+    setCardContent(content);
+  }, [content]);
 
   return (
     <button
