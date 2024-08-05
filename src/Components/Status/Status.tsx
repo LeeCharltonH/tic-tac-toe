@@ -14,6 +14,7 @@ export const Status = () => {
   const gameStatus = useGameStatus();
   const { hasOWon, hasXWon } = checkGameStatus(gameStatus);
   const setWinningPlayer = useSetWinningPlayer();
+  const isGameInPlay = gameStatus.some((item) => item === null);
 
   useEffect(() => {
     if (hasOWon || hasXWon) {
@@ -27,9 +28,9 @@ export const Status = () => {
     };
   }, [hasOWon, hasXWon, setWinningPlayer]);
 
-  const statusText = winningPlayer
-    ? `Winner is: ${winningPlayer}`
-    : `Next player is ${currentPlayer}`;
+  const inPlayText = isGameInPlay ? `Next player is ${currentPlayer}` : "It's a tie";
+
+  const statusText = winningPlayer ? `Winner is: ${winningPlayer}` : inPlayText;
 
   return (
     <div className="text-2xl flex justify-center content-center flex-wrap font-bold">
