@@ -10,13 +10,17 @@ const App = () => {
 
   return (
     <main className="bg-dark-cyan min-h-screen flex flex-col justify-center items-center">
-      <Grid>
-        {gameStatus.map((cardValue, index) => (
-          <Card key={index} cardNumber={index} content={cardValue} onClick={setNextPlayer} />
-        ))}
-      </Grid>
-      <Status />
-      <Reset />
+      <div>
+        <Grid>
+          {gameStatus.map((cardValue, index) => (
+            <Card key={index} cardNumber={index} content={cardValue} onClick={setNextPlayer} />
+          ))}
+        </Grid>
+        <div className="flex justify-between flex-col gap-5 my-6 py-6 px-6 rounded-md shadow-inset">
+          <Status />
+          <Reset />
+        </div>
+      </div>
     </main>
   );
 };

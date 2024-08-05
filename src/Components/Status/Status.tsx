@@ -31,5 +31,9 @@ export const Status = () => {
     ? `Winner is: ${winningPlayer}`
     : `Next player is ${currentPlayer}`;
 
-  return <div>{statusText}</div>;
+  return (
+    <div className="text-2xl flex justify-center content-center flex-wrap font-bold">
+      {statusText}
+    </div>
+  );
 };

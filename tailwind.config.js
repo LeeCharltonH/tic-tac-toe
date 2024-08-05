@@ -1,7 +1,12 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        inset: 'inset 0px 0px 30px 3px rgba(23,190,187,0.3)',
+        outset: '0px 0px 30px 3px rgba(23,190,187,0.3)'
+      }
+    },
     colors: {
       black: '#010101',
       'light-grey': '#e4e4e4',
