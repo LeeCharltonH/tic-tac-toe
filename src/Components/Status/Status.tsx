@@ -23,7 +23,6 @@ export const Status = () => {
     }
 
     return () => {
-      console.log('cleanup run');
       return setWinningPlayer(null);
     };
   }, [hasOWon, hasXWon, setWinningPlayer]);
